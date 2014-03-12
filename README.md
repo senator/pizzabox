@@ -16,3 +16,21 @@ that, however, must come a good schema design for the database and some architec
 
 Database
 --------
+
+We'll need tables like this at minimum:
+
+    +-------+
+    | store |
+    +-------+
+       ^   ^
+       |   |
+       |  +---------------+           +--------+      +----------+
+       |  | business_day  |<----------| ticket |----->| operator |
+       |  +---------------+           +--------+      +----------+
+       |                                   ^
+       |                                   |
+       |  +----------------+        +-------------+
+       \--| inventory_item |<-------| ticket_item |
+          +----------------+        +-------------+
+
+But I probably need further normalization and thought here.
