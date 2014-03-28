@@ -1,0 +1,7 @@
+#!/usr/bin/env ruby
+
+require 'pizzabox/config'
+
+PizzaBox::Config.load!('conf/db.yaml')
+
+puts PizzaBox::Config.settings

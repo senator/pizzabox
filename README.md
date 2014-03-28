@@ -1,7 +1,7 @@
 PizzaBox
 ========
 
-PizzaBox is an application I'm dreaming up 1) to teach myself some Java and
+PizzaBox is an application I'm dreaming up 1) to teach myself some Ruby and
 2) to practice on building things made up of nice, loosely coupled components
 that play well.
 
