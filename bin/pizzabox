@@ -2,6 +2,6 @@
 
 require 'pizzabox/config'
 
-PizzaBox::Config.load!('conf/db.yaml')
+PizzaBox::Config.load!(RbConfig::CONFIG['sysconfdir'] . 'pizzabox/db.yaml')
 
 puts PizzaBox::Config.settings
