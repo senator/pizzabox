@@ -1,0 +1,8 @@
+#!/bin/sh
+
+cat << EOF
+prefix=@@prefix@@
+sysconfdir=@@sysconfdir@@
+bindir=@@bindir@@
+rbdir=@@rbdir@@
+EOF

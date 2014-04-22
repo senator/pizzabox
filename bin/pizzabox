@@ -2,6 +2,7 @@
 
 require 'pizzabox/config'
 
+# XXX TODO fix the following line to use `pizzabox-config` instead of RbConfig
 PizzaBox::Config.load!(RbConfig::CONFIG['sysconfdir'] . 'pizzabox/db.yaml')
 
 puts PizzaBox::Config.settings
