@@ -3,6 +3,8 @@ require 'pizzabox'
 module PizzaBox::Config
 
   require 'yaml'
+  require 'json'
+  require 'pathname'
 
   # This is a singleton, aka self-extended module
   extend self
@@ -10,11 +12,35 @@ module PizzaBox::Config
   @settings = {}
   attr_reader :settings
 
-  # This is the main point of entry - we call Settings.load! and provide
-  # a name of the file to read as it's argument. We can also pass in some
-  # options, but at the moment it's being used to allow per-environment
-  # overrides in Rails
-  def load!(filename, options = {})
+  def possible_file_names
+      results = [
+          "./.pizzaboxrc",
+          "/usr/local/etc/pizzabox.conf",
+          "/usr/local/etc/pizzabox/pizzabox.conf",
+          "/etc/pizzabox.conf",
+          "/etc/pizzabox/pizzabox.conf"
+      ]
+
+      config_parameters = JSON.parse(%x(pizzabox-config))
+      results.unshift(
+          Pathname.new(config_parameters["sysconfdir"]) + "pizzabox.conf"
+      )
+
+      return results
+  end
+
+  def load!
+      for f in self.possible_file_names
+          begin
+              self.load_from_file!(f)
+              return
+          rescue Errno::ENOENT
+              next
+          end
+      end
+  end
+
+  def load_from_file!(filename)
     @settings = YAML::load_file(filename)
   end
 

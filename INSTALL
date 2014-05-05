@@ -1,0 +1,25 @@
+Installation
+============
+
+There's database setup, and there's app installation.
+
+
+Database setup
+--------------
+
+TODO WRITEME
+
+
+App installation
+----------------
+
+Some day there will be a higher-level way to set this up, like distro packages.
+
+As root, run
+
+# ruby setup.rb
+
+There are tools that would allow you to build a basic .rpm or .deb
+around this.  Otherwise, note that building this way doesn't give
+you an easy way to uninstall.
+

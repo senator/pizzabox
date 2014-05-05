@@ -3,16 +3,14 @@
 # 
 # XXX Is there a better way to get that info in the build app at runtime?
 
-require 'pathname'
+require 'json'
 
-src = Pathname.new(srcdir_root) + "binsuppl/pizzabox-config.pre"
-dst = 'pizzabox-config'
-
-raise "BUILD FAIL: #{src} does not exist (srcdir_root: #{srcdir_root}" \
-    unless File.exist?(src)
-
-replacements = %w[prefix sysconfdir bindir rbdir].map do |key|
-    "s!@@#{key}@@!" + config(key) + "!"
-end.join("; ")
-
-system("sed -e '#{replacements}' #{src} > #{dst}")
+File.open('pizzabox-config', 'w') do |f|
+    f.write("#!/bin/sh\n# Generated at build time\n\ncat <<EOF\n")
+    f.write(
+        Hash[
+            %w[prefix sysconfdir bindir rbdir].map {|k| [ k, config(k) ] }
+        ].to_json
+    )
+    f.write("\nEOF\n")
+end

@@ -5,6 +5,8 @@ PizzaBox is an application I'm dreaming up 1) to teach myself some Ruby and
 2) to practice on building things made up of nice, loosely coupled components
 that play well.
 
+See the [INSTALL] document for installation instructions.
+
 This application should provide at least a decent simulation of what a pizza
 restaurant needs to operate, including taking orders and tracking, managing
 customer contact information, routing of orders for delivery drivers, POS
