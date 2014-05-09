@@ -7,7 +7,7 @@ require 'minitest/autorun'
 
 describe PizzaBox::Config do
   before do
-    PizzaBox::Config.load!('conf/db.yaml')
+    PizzaBox::Config.load!
   end
 
   describe "settings" do
