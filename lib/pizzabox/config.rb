@@ -6,6 +6,8 @@ module PizzaBox::Config
   require 'json'
   require 'pathname'
 
+  class ConfigNotFound < RuntimeError; end
+
   # This is a singleton, aka self-extended module
   extend self
 
@@ -18,19 +20,26 @@ module PizzaBox::Config
           "/usr/local/etc/pizzabox.conf",
           "/usr/local/etc/pizzabox/pizzabox.conf",
           "/etc/pizzabox.conf",
-          "/etc/pizzabox/pizzabox.conf"
+          "/etc/pizzabox/pizzabox.conf",
+          Pathname.new($0).dirname + "pizzabox.conf"
       ]
 
-      config_parameters = JSON.parse(%x(pizzabox-config))
-      results.unshift(
+      begin
+        config_parameters = JSON.parse(%x(pizzabox-config))
+        results.unshift(
           Pathname.new(config_parameters["sysconfdir"]) + "pizzabox.conf"
-      )
+        )
+      rescue Errno::ENOENT
+          # Oh well; try to move on.
+      end
 
       return results
   end
 
   def load!
-      for f in self.possible_file_names
+      possible = self.possible_file_names
+
+      for f in possible
           begin
               self.load_from_file!(f)
               return
@@ -38,6 +47,9 @@ module PizzaBox::Config
               next
           end
       end
+
+      raise ConfigNotFound,
+         "Could not find any config to load. Tried: " + possible.join(", ")
   end
 
   def load_from_file!(filename)

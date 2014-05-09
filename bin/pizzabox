@@ -1,4 +1,4 @@
-#! /Users/lebbeous/.rbenv/versions/2.0.0-p451/bin/ruby
+#!/usr/bin/env ruby
 
 require 'pizzabox/config'
 
