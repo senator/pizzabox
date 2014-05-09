@@ -8,9 +8,11 @@ require 'json'
 File.open('pizzabox-config', 'w') do |f|
     f.write("#!/bin/sh\n# Generated at build time\n\ncat <<EOF\n")
     f.write(
-        Hash[
-            %w[prefix sysconfdir bindir rbdir].map {|k| [ k, config(k) ] }
-        ].to_json
+        JSON.pretty_generate(
+            Hash[
+                %w[prefix sysconfdir bindir rbdir].map {|k| [ k, config(k) ] }
+            ]
+        )
     )
     f.write("\nEOF\n")
 end
